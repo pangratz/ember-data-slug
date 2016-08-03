@@ -1,6 +1,41 @@
-# Ember-data-slug
+# ember-data-slug
 
-This README outlines the details of collaborating on this Ember addon.
+Slug support for `store.findRecord`.
+
+If your API supports to reference a model via slug additionally to the id, then
+this addon allows you to use `findRecord` with both the slug or id:
+
+```js
+// GET /videos/best-dance-ever
+let findViaSlug = store.findRecord("video", "best-dance-ever");
+
+// GET /videos/1
+let findViaId = store.findRecord("video", "1");
+
+// both requests return the same response
+// {
+//   id: "1",
+//   slug: "best-dancing-ever",
+//   url: "https://www.youtube.com/watch?v=1TphEh0Qgv0"
+// }
+```
+
+This addon ensures that the same records are referenced within Ember Data:
+
+```js
+Ember.RSVP.all([ findViaSlug, findViaId ]).then(function([ foundViaSlug, foundViaId ]) {
+  // true
+  foundViaSlug === foundViaId;
+});
+```
+
+Install via:
+
+```
+ember install ember-data-slug
+```
+
+# Development
 
 ## Installation
 
