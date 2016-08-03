@@ -1,6 +1,6 @@
 {
   "name": "ember-data-slug",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "slug support for store.findRecord",
   "directories": {
     "doc": "doc",
