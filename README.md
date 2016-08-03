@@ -1,4 +1,4 @@
-# ember-data-slug
+# ember-data-slug [![Build Status](https://travis-ci.org/pangratz/ember-data-slug.svg?branch=master)](https://travis-ci.org/pangratz/ember-data-slug)
 
 Slug support for `store.findRecord`.
 
