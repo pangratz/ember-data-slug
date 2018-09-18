@@ -1,5 +1,8 @@
 import DS from 'ember-data';
-import { AdapterSlugSupport, StoreSlugSupport } from 'ember-data-slug';
+import {
+  AdapterSlugSupport,
+  StoreSlugSupport
+} from 'ember-data-slug';
 
 const { Store, RESTAdapter } = DS;
 
