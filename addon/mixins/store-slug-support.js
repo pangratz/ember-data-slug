@@ -1,6 +1,7 @@
-import Ember from 'ember';
-
-const { Map, MapWithDefault, Mixin, get } = Ember;
+import Map from '@ember/map';
+import MapWithDefault from '@ember/map/with-default';
+import Mixin from '@ember/object/mixin';
+import { get } from '@ember/object';
 
 export default Mixin.create({
 

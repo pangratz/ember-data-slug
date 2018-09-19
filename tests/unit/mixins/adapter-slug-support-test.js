@@ -1,67 +1,67 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
 import AdapterSlugSupportMixin from 'ember-data-slug/mixins/adapter-slug-support';
 import { module, test } from 'qunit';
 
-module('Unit | Mixin | adapter slug support');
+module('Unit | Mixin | adapter slug support', function() {
+  test('urlForQueryRecord calls urlForFindRecord', function(assert) {
+    let AdapterSlugSupportObject = EmberObject.extend(AdapterSlugSupportMixin);
+    let subject = AdapterSlugSupportObject.create({
+      urlForFindRecord(id, modelName) {
+        assert.equal(id, 'the-slug');
+        assert.equal(modelName, 'my-model');
+      }
+    });
 
-test('urlForQueryRecord calls urlForFindRecord', function(assert) {
-  let AdapterSlugSupportObject = Ember.Object.extend(AdapterSlugSupportMixin);
-  let subject = AdapterSlugSupportObject.create({
-    urlForFindRecord(id, modelName) {
-      assert.equal(id, 'the-slug');
-      assert.equal(modelName, 'my-model');
-    }
+    let query = {
+      __ember_data_slug: 'the-slug'
+    };
+
+    subject.urlForQueryRecord(query, 'my-model');
   });
 
-  let query = {
-    __ember_data_slug: 'the-slug'
-  };
+  test('urlForQueryRecord calls _super when not invoked for ember-data-slug', function(assert) {
+    let AdapterSlugSupportObject = EmberObject.extend({
+      urlForQueryRecord(query, modelName) {
+        assert.deepEqual(query, {
+          slug: 'the-slug'
+        });
+        assert.equal(modelName, 'my-model');
+      }
+    }).extend(AdapterSlugSupportMixin);
 
-  subject.urlForQueryRecord(query, 'my-model');
-});
+    let subject = AdapterSlugSupportObject.create();
 
-test('urlForQueryRecord calls _super when not invoked for ember-data-slug', function(assert) {
-  let AdapterSlugSupportObject = Ember.Object.extend({
-    urlForQueryRecord(query, modelName) {
-      assert.deepEqual(query, {
-        slug: 'the-slug'
-      });
-      assert.equal(modelName, 'my-model');
-    }
-  }).extend(AdapterSlugSupportMixin);
+    let query = {
+      slug: 'the-slug'
+    };
 
-  let subject = AdapterSlugSupportObject.create();
+    subject.urlForQueryRecord(query, 'my-model');
+  });
 
-  let query = {
-    slug: 'the-slug'
-  };
+  test('sortQueryParams removes properties when invoked for ember-data-slug', function(assert) {
+    let AdapterSlugSupportObject = EmberObject.extend(AdapterSlugSupportMixin);
+    let subject = AdapterSlugSupportObject.create();
 
-  subject.urlForQueryRecord(query, 'my-model');
-});
+    let queryParams = {
+      __ember_data_slug: '123',
+      other: true
+    };
 
-test('sortQueryParams removes properties when invoked for ember-data-slug', function(assert) {
-  let AdapterSlugSupportObject = Ember.Object.extend(AdapterSlugSupportMixin);
-  let subject = AdapterSlugSupportObject.create();
+    subject.sortQueryParams(queryParams);
 
-  let queryParams = {
-    __ember_data_slug: '123',
-    other: true
-  };
+    assert.deepEqual(queryParams, { other: true });
+  });
 
-  subject.sortQueryParams(queryParams);
+  test('sortQueryParams ignores properties if not invoked for ember-data-slug', function(assert) {
+    let AdapterSlugSupportObject = EmberObject.extend(AdapterSlugSupportMixin);
+    let subject = AdapterSlugSupportObject.create();
 
-  assert.deepEqual(queryParams, { other: true });
-});
+    let queryParams = {
+      slug: 'the-slug'
+    };
 
-test('sortQueryParams ignores properties if not invoked for ember-data-slug', function(assert) {
-  let AdapterSlugSupportObject = Ember.Object.extend(AdapterSlugSupportMixin);
-  let subject = AdapterSlugSupportObject.create();
+    subject.sortQueryParams(queryParams);
 
-  let queryParams = {
-    slug: 'the-slug'
-  };
-
-  subject.sortQueryParams(queryParams);
-
-  assert.deepEqual(queryParams, { slug: 'the-slug' });
+    assert.deepEqual(queryParams, { slug: 'the-slug' });
+  });
 });

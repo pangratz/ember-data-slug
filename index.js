@@ -1,6 +1,10 @@
-/* jshint node: true */
 'use strict';
 
 module.exports = {
-  name: 'ember-data-slug'
+  name: require('./package').name,
+  options: {
+    babel: {
+      plugins: ['transform-object-rest-spread']
+    }
+  }
 };
