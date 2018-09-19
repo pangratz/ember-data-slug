@@ -2,6 +2,9 @@
 
 Slug support for `store.findRecord`.
 
+Usage
+------------------------------------------------------------------------------
+
 If your API supports to reference a model via slug additionally to the id, then
 this addon allows you to use `findRecord` with both the slug or id:
 
@@ -29,27 +32,14 @@ Ember.RSVP.all([ findViaSlug, findViaId ]).then(function([ foundViaSlug, foundVi
 });
 ```
 
+Installation
+------------------------------------------------------------------------------
+
 Install via:
 
 ```
 ember install ember-data-slug
 ```
-
-# Development
-
-Installation
-------------------------------------------------------------------------------
-
-```
-ember install my-addon
-```
-
-
-Usage
-------------------------------------------------------------------------------
-
-[Longer description of how to use the addon in apps.]
-
 
 Contributing
 ------------------------------------------------------------------------------
